@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OneTrip | Share Your Itinerary Calmly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Playfair+Display:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top-bar" id="top">
+      <nav class="nav">
+        <a class="logo" href="#top">OneTrip</a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Toggle navigation</span>
+          <span aria-hidden="true"></span>
+        </button>
+        <div class="nav-links" id="nav-list">
+          <a href="#planner">Planner</a>
+          <a href="#reasons">Why OneTrip</a>
+          <a href="#cta">Get Started</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <span class="badge">Calm coordination for every getaway</span>
+            <h1>Summarize your itinerary in one place and send it to your loved ones</h1>
+            <p>
+              Collect reservations, highlight the magic, and share the essentials in a
+              single, elegant link. OneTrip keeps the people you care about perfectly
+              in the loop.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#planner">Start planning</a>
+              <a class="btn btn-secondary" href="#reasons">See what’s inside</a>
+            </div>
+            <dl class="hero-metrics">
+              <div>
+                <dt>4.9/5</dt>
+                <dd>Average traveler rating</dd>
+              </div>
+              <div>
+                <dt>12k+</dt>
+                <dd>Itineraries shared this year</dd>
+              </div>
+              <div>
+                <dt>Minute</dt>
+                <dd>To deliver a shareable recap</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="hero-illustration" aria-hidden="true">
+            <div class="hero-card">
+              <div class="hero-card-header">
+                <span class="hero-label">Lake Como escape</span>
+                <span class="hero-date">May 24 – 27</span>
+              </div>
+              <ul class="hero-timeline">
+                <li>
+                  <strong>Fri</strong>
+                  <span>Check in · Villa Azzurra</span>
+                </li>
+                <li>
+                  <strong>Sat</strong>
+                  <span>Boat tour · 10:00</span>
+                </li>
+                <li>
+                  <strong>Sun</strong>
+                  <span>Dinner · La Terrazza</span>
+                </li>
+              </ul>
+              <div class="hero-share">
+                <span class="pill">Sharing with 3 people</span>
+                <span class="pill pill-outline">Live updates on</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="planner" id="planner">
+        <div class="planner-intro">
+          <h2>Build, polish, and share your itinerary summary</h2>
+          <p>
+            Drop in the standout details and OneTrip does the formatting for you. Craft a
+            recap that’s easy to skim, then copy a beautiful summary to send instantly.
+          </p>
+          <ul class="planner-benefits">
+            <li>Highlight what matters most with gentle guidance.</li>
+            <li>Keep travel companions aligned with live updates.</li>
+            <li>Share to email, text, or messaging apps in a heartbeat.</li>
+          </ul>
+        </div>
+
+        <div class="planner-grid">
+          <form class="planner-form" id="itinerary-form" novalidate>
+            <fieldset>
+              <legend class="sr-only">Add itinerary detail</legend>
+              <label class="field">
+                <span>Destination or title</span>
+                <input type="text" id="destination" name="destination" placeholder="e.g., Sunset sail" required />
+              </label>
+              <div class="field field-inline">
+                <label>
+                  <span>Date</span>
+                  <input type="date" id="date" name="date" />
+                </label>
+                <label>
+                  <span>Time</span>
+                  <input type="time" id="time" name="time" />
+                </label>
+              </div>
+              <label class="field">
+                <span>Notes</span>
+                <textarea id="notes" name="notes" rows="2" placeholder="Where to meet, confirmation numbers, reminders"></textarea>
+              </label>
+              <button type="submit" class="btn btn-primary">Add to summary</button>
+            </fieldset>
+            <p class="form-hint" id="form-feedback" role="status" aria-live="polite"></p>
+          </form>
+
+          <div class="planner-preview">
+            <div class="preview-header">
+              <h3>Shareable itinerary preview</h3>
+              <p class="preview-meta">Organized automatically in chronological order.</p>
+            </div>
+            <ul class="preview-list" id="itinerary-list" aria-live="polite"></ul>
+            <p class="empty-state" id="empty-state">Add your first highlight to see it appear here.</p>
+            <div class="share-card">
+              <label for="share-output">Copy &amp; send</label>
+              <textarea id="share-output" readonly></textarea>
+              <div class="share-actions">
+                <button type="button" class="btn btn-secondary" id="copy-summary">Copy summary</button>
+                <span class="copy-feedback" id="copy-feedback" role="status" aria-live="polite"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="reasons" id="reasons">
+        <div class="reasons-content">
+          <h2>Designed for peaceful planning</h2>
+          <div class="reason-grid">
+            <article>
+              <h3>Everything in context</h3>
+              <p>Attach confirmations, add notes, and surface the essentials at a glance.</p>
+            </article>
+            <article>
+              <h3>Gentle nudges</h3>
+              <p>Smart reminders help you fill in any gaps before you hit share.</p>
+            </article>
+            <article>
+              <h3>Effortless sharing</h3>
+              <p>Send a polished link, PDF, or message — your summary adapts beautifully.</p>
+            </article>
+            <article>
+              <h3>Private by default</h3>
+              <p>Control who sees your trip details with expiring links and access toggles.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta" id="cta">
+        <div class="cta-card">
+          <h2>Ready to calm your travel coordination?</h2>
+          <p>Join the waitlist for early access to OneTrip’s sharing tools.</p>
+          <form class="cta-form">
+            <label class="sr-only" for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            <button type="submit" class="btn btn-primary">Notify me</button>
+          </form>
+          <p class="cta-note">We’ll send one welcome note and keep you updated when sharing launches.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; <span id="year"></span> OneTrip. Crafted to bring itineraries and loved ones together.</p>
+      <div class="footer-links">
+        <a href="#planner">Planner</a>
+        <a href="#reasons">Why OneTrip</a>
+        <a href="#cta">Get Started</a>
+      </div>
+    </footer>
+
+    <script>
+      const itinerary = [
+        {
+          destination: "Check-in · Casa Marena",
+          date: "2024-08-12",
+          time: "15:00",
+          notes: "Ask for the lake-view room upgrade."
+        },
+        {
+          destination: "Sunrise ferry to Bellagio",
+          date: "2024-08-13",
+          time: "08:15",
+          notes: "Meet at dock 3 with tickets in wallet."
+        },
+        {
+          destination: "Celebration dinner · Lido 84",
+          date: "2024-08-13",
+          time: "19:30",
+          notes: "Confirm gluten-free menu for Jamie."
+        }
+      ];
+
+      const form = document.getElementById("itinerary-form");
+      const list = document.getElementById("itinerary-list");
+      const emptyState = document.getElementById("empty-state");
+      const shareOutput = document.getElementById("share-output");
+      const copyButton = document.getElementById("copy-summary");
+      const copyFeedback = document.getElementById("copy-feedback");
+      const formFeedback = document.getElementById("form-feedback");
+      const navToggle = document.querySelector(".nav-toggle");
+      const navLinks = document.getElementById("nav-list");
+
+      const formatDate = (dateString) => {
+        if (!dateString) return "Flex date";
+        const formatter = new Intl.DateTimeFormat(undefined, {
+          month: "short",
+          day: "numeric",
+          weekday: "short"
+        });
+        try {
+          return formatter.format(new Date(dateString));
+        } catch (error) {
+          return dateString;
+        }
+      };
+
+      const formatTime = (timeString) => {
+        if (!timeString) return "Time TBA";
+        const [hours, minutes] = timeString.split(":");
+        if (Number.isNaN(Number(hours))) return timeString;
+        const date = new Date();
+        date.setHours(parseInt(hours, 10));
+        date.setMinutes(parseInt(minutes || "0", 10));
+        return new Intl.DateTimeFormat(undefined, {
+          hour: "numeric",
+          minute: "2-digit"
+        }).format(date);
+      };
+
+      const sortItinerary = () => {
+        itinerary.sort((a, b) => {
+          const dateA = a.date || "";
+          const dateB = b.date || "";
+          if (dateA === dateB) {
+            return (a.time || "").localeCompare(b.time || "");
+          }
+          return dateA.localeCompare(dateB);
+        });
+      };
+
+      const buildSummary = () => {
+        if (!itinerary.length) {
+          return "Your OneTrip summary is ready when you add a highlight.";
+        }
+
+        const grouped = itinerary.reduce((acc, item) => {
+          const key = item.date || "Flexible";
+          acc[key] = acc[key] || [];
+          acc[key].push(item);
+          return acc;
+        }, {});
+
+        return Object.entries(grouped)
+          .map(([date, items]) => {
+            const readableDate = date === "Flexible" ? "Flexible date" : formatDate(date);
+            const events = items
+              .map((event) => {
+                const time = event.time ? formatTime(event.time) : "Time TBA";
+                const note = event.notes ? ` — ${event.notes}` : "";
+                return `• ${time} · ${event.destination}${note}`;
+              })
+              .join("\n");
+            return `${readableDate}\n${events}`;
+          })
+          .join("\n\n");
+      };
+
+      const renderItinerary = () => {
+        sortItinerary();
+        list.innerHTML = "";
+        emptyState.hidden = itinerary.length > 0;
+        list.hidden = itinerary.length === 0;
+
+        itinerary.forEach((item, index) => {
+          const listItem = document.createElement("li");
+          listItem.className = "preview-item";
+          listItem.dataset.index = index.toString();
+
+          const title = document.createElement("div");
+          title.className = "preview-title";
+          title.textContent = item.destination;
+
+          const meta = document.createElement("div");
+          meta.className = "preview-meta-row";
+          meta.innerHTML = `<span>${formatDate(item.date)}</span><span>${formatTime(item.time)}</span>`;
+
+          const notes = document.createElement("p");
+          notes.className = "preview-notes";
+          notes.textContent = item.notes || "Add notes to give more context.";
+
+          const removeButton = document.createElement("button");
+          removeButton.type = "button";
+          removeButton.className = "remove-btn";
+          removeButton.textContent = "Remove";
+          removeButton.setAttribute("aria-label", `Remove ${item.destination}`);
+
+          listItem.append(title, meta, notes, removeButton);
+          list.appendChild(listItem);
+        });
+
+        shareOutput.value = buildSummary();
+      };
+
+      renderItinerary();
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const destination = form.destination.value.trim();
+        const date = form.date.value;
+        const time = form.time.value;
+        const notes = form.notes.value.trim();
+
+        if (!destination) {
+          formFeedback.textContent = "Add a destination or highlight to continue.";
+          return;
+        }
+
+        itinerary.push({ destination, date, time, notes });
+        form.reset();
+        renderItinerary();
+        formFeedback.textContent = `${destination} added to your summary.`;
+      });
+
+      list.addEventListener("click", (event) => {
+        const target = event.target;
+        if (target instanceof HTMLButtonElement && target.classList.contains("remove-btn")) {
+          const item = target.closest("li");
+          const index = Number(item?.dataset.index ?? "-1");
+          if (index >= 0) {
+            const [removed] = itinerary.splice(index, 1);
+            renderItinerary();
+            formFeedback.textContent = `${removed.destination} removed.`;
+          }
+        }
+      });
+
+      copyButton.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(shareOutput.value);
+          copyFeedback.textContent = "Summary copied to clipboard.";
+        } catch (error) {
+          shareOutput.select();
+          document.execCommand("copy");
+          copyFeedback.textContent = "Copied. If not, select and copy manually.";
+        }
+      });
+
+      navToggle.addEventListener("click", () => {
+        const expanded = navToggle.getAttribute("aria-expanded") === "true";
+        navToggle.setAttribute("aria-expanded", String(!expanded));
+        navLinks.toggleAttribute("data-open");
+      });
+
+      navLinks.addEventListener("click", (event) => {
+        if (event.target instanceof HTMLAnchorElement) {
+          navLinks.removeAttribute("data-open");
+          navToggle.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!navLinks.hasAttribute("data-open")) {
+          return;
+        }
+
+        if (
+          event.target instanceof HTMLElement &&
+          !event.target.closest(".nav")
+        ) {
+          navLinks.removeAttribute("data-open");
+          navToggle.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      const yearElement = document.getElementById("year");
+      yearElement.textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
