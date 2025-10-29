@@ -95,6 +95,28 @@
             Drop in the standout details and OneTrip does the formatting for you. Craft a
             recap that’s easy to skim, then copy a beautiful summary to send instantly.
           </p>
+          <div class="planner-email">
+            <form class="email-form" id="email-form" novalidate>
+              <label class="field">
+                <span>Where should we send your organized trip view?</span>
+                <input
+                  type="email"
+                  id="user-email"
+                  name="user-email"
+                  placeholder="you@example.com"
+                  autocomplete="email"
+                  required
+                />
+              </label>
+              <button type="submit" class="btn btn-primary">Save email</button>
+            </form>
+            <p class="email-instructions" id="email-instructions">
+              Enter the inbox you want OneTrip to organize. Forward confirmation emails to
+              <strong>collect@onetrip.app</strong> and we’ll stitch them together, send your
+              summary back, and include a link you can text to loved ones.
+            </p>
+            <p class="email-status" id="email-status" role="status" aria-live="polite"></p>
+          </div>
           <ul class="planner-benefits">
             <li>Highlight what matters most with gentle guidance.</li>
             <li>Keep travel companions aligned with live updates.</li>
@@ -177,6 +199,8 @@
           <h2>Ready to calm your travel coordination?</h2>
           <p>Join the waitlist for early access to OneTrip’s sharing tools.</p>
           <form class="cta-form">
+            <label class="sr-only" for="cta-email">Email address</label>
+            <input type="email" id="cta-email" name="cta-email" placeholder="you@example.com" required />
             <label class="sr-only" for="email">Email address</label>
             <input type="email" id="email" name="email" placeholder="you@example.com" required />
             <button type="submit" class="btn btn-primary">Notify me</button>
@@ -218,6 +242,10 @@
       ];
 
       const form = document.getElementById("itinerary-form");
+      const emailForm = document.getElementById("email-form");
+      const emailInput = document.getElementById("user-email");
+      const emailStatus = document.getElementById("email-status");
+      const shareNote = document.getElementById("share-note");
       const list = document.getElementById("itinerary-list");
       const emptyState = document.getElementById("empty-state");
       const shareOutput = document.getElementById("share-output");
@@ -226,6 +254,21 @@
       const formFeedback = document.getElementById("form-feedback");
       const navToggle = document.querySelector(".nav-toggle");
       const navLinks = document.getElementById("nav-list");
+      const emailInstructions = document.getElementById("email-instructions");
+
+      let travelerEmail = "";
+
+      const emailPattern = /.+@.+\..+/;
+
+      const updateShareNote = () => {
+        if (!travelerEmail) {
+          shareNote.textContent =
+            "Add your email above to generate a summary that you can forward or share via the SMS link included in your OneTrip message.";
+          return;
+        }
+
+        shareNote.innerHTML = `We’ll deliver your organized trip to <strong>${travelerEmail}</strong> and include a link you can text to friends and family.`;
+      };
 
       const formatDate = (dateString) => {
         if (!dateString) return "Flex date";
@@ -266,6 +309,12 @@
       };
 
       const buildSummary = () => {
+        if (!travelerEmail) {
+          return "Enter the email that should receive your OneTrip summary.";
+        }
+
+        if (!itinerary.length) {
+          return `OneTrip summary for ${travelerEmail}\nForward confirmations to collect@onetrip.app so we can arrange everything for you.`;
         if (!itinerary.length) {
           return "Your OneTrip summary is ready when you add a highlight.";
         }
@@ -277,6 +326,7 @@
           return acc;
         }, {});
 
+        const summary = Object.entries(grouped)
         return Object.entries(grouped)
           .map(([date, items]) => {
             const readableDate = date === "Flexible" ? "Flexible date" : formatDate(date);
@@ -290,6 +340,8 @@
             return `${readableDate}\n${events}`;
           })
           .join("\n\n");
+
+        return `OneTrip summary for ${travelerEmail}\nForward confirmations to collect@onetrip.app so we can arrange everything for you.\n\n${summary}\n\nWe’ll send this itinerary back to ${travelerEmail} with a shareable link for SMS.`;
       };
 
       const renderItinerary = () => {
@@ -330,6 +382,35 @@
 
       renderItinerary();
 
+      emailForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const proposedEmail = emailInput.value.trim();
+
+        if (!proposedEmail) {
+          emailStatus.textContent = "Enter an email so we know where to send your trip.";
+          return;
+        }
+
+        if (!emailPattern.test(proposedEmail)) {
+          emailStatus.textContent = "That doesn’t look like a valid email. Try again.";
+          return;
+        }
+
+        travelerEmail = proposedEmail;
+        emailStatus.textContent = `Great! We’ll send your itinerary updates to ${travelerEmail}.`;
+        emailInstructions.innerHTML =
+          "Forward booking confirmations (flights, hotels, tours) to <strong>collect@onetrip.app</strong>. We’ll chronologically organize them and notify you at your saved email.";
+        renderItinerary();
+        updateShareNote();
+        formFeedback.textContent = "Now start adding the highlights you want to appear.";
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!travelerEmail) {
+          formFeedback.textContent = "Save the email you want us to use before adding plans.";
+          return;
+        }
       form.addEventListener("submit", (event) => {
         event.preventDefault();
         const destination = form.destination.value.trim();
@@ -401,6 +482,7 @@
 
       const yearElement = document.getElementById("year");
       yearElement.textContent = new Date().getFullYear();
+      updateShareNote();
     </script>
   </body>
 </html>
