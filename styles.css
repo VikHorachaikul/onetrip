@@ -550,16 +550,6 @@ textarea[readonly] {
   min-height: 1.2em;
 }
 
-.share-note {
-  margin: 16px 0 0;
-  color: var(--color-muted);
-  font-size: 0.95rem;
-}
-
-.share-note strong {
-  color: var(--color-primary-dark);
-}
-
 .reasons {
   padding: 88px 24px 96px;
 }
